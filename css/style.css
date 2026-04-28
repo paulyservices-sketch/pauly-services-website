@@ -107,7 +107,9 @@ a { text-decoration: none; color: inherit; }
 .hero-bg {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(14,165,233,0.09) 0%, var(--bg) 70%);
+  background:
+    linear-gradient(to bottom, rgba(3,8,15,0.62) 0%, rgba(3,8,15,0.38) 45%, rgba(3,8,15,0.82) 100%),
+    url('https://images.unsplash.com/photo-1568347877321-f8935c7dc5a3?auto=format&fit=crop&w=1920&q=85') center/cover no-repeat;
 }
 .hero-orb {
   position: absolute;
@@ -361,6 +363,66 @@ a { text-decoration: none; color: inherit; }
 .trust-inner { display: flex; flex-wrap: wrap; gap: 12px 32px; justify-content: center; }
 .trust-item { font-size: 0.83rem; font-weight: 600; color: var(--muted); white-space: nowrap; transition: color 0.2s; }
 .trust-item:hover { color: var(--text); }
+
+/* ===== PHOTO STRIP ===== */
+.photo-strip {
+  padding: 0 0 8px;
+  background: var(--bg);
+}
+.photo-strip-inner {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 4px;
+  max-height: 480px;
+  overflow: hidden;
+}
+.ps-stack {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 4px;
+}
+.ps-item {
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+  min-height: 180px;
+  transition: transform 0.5s ease;
+}
+.ps-featured { min-height: 480px; }
+.ps-item:hover { transform: scale(1.02); }
+.ps-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(3,8,15,0.75) 0%, transparent 50%);
+  display: flex;
+  align-items: flex-end;
+  padding: 18px 22px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.ps-item:hover .ps-overlay { opacity: 1; }
+.ps-overlay span {
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+}
+.photo-credit {
+  text-align: right;
+  font-size: 0.7rem;
+  color: var(--muted);
+  padding: 6px 16px 0;
+}
+.photo-credit a { color: var(--muted); text-decoration: underline; }
+@media (max-width: 640px) {
+  .photo-strip-inner { grid-template-columns: 1fr; max-height: none; }
+  .ps-featured { min-height: 260px; }
+  .ps-stack { grid-template-columns: 1fr 1fr; grid-template-rows: none; }
+  .ps-item { min-height: 140px; }
+  .ps-overlay { opacity: 1; }
+}
 
 /* ===== SECTIONS ===== */
 .section { padding: 90px 0; }
