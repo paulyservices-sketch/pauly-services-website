@@ -32,6 +32,48 @@ body {
 .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 a { text-decoration: none; color: inherit; }
 
+/* ===== LAUNCH BANNER ===== */
+.launch-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: linear-gradient(90deg, rgba(251,191,36,0.15), rgba(14,165,233,0.12), rgba(251,191,36,0.15));
+  border-bottom: 1px solid rgba(251,191,36,0.35);
+  padding: 11px 20px;
+  font-size: 0.85rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 101;
+}
+.launch-icon { font-size: 1rem; flex-shrink: 0; }
+.launch-text { color: var(--text); }
+.launch-text strong { color: var(--gold); }
+.launch-cta {
+  background: var(--gold);
+  color: #000;
+  font-weight: 800;
+  font-size: 0.8rem;
+  padding: 5px 14px;
+  border-radius: 999px;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+.launch-cta:hover { opacity: 0.85; }
+.launch-close {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 2px 6px;
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.launch-close:hover { color: var(--text); }
+
 /* ===== NAV ===== */
 .nav {
   position: fixed;
