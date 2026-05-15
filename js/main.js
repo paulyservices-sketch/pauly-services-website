@@ -168,3 +168,18 @@ window.addEventListener('scroll', () => {
     link.style.color = link.getAttribute('href') === '#' + current ? 'var(--blue2)' : '';
   });
 }, { passive: true });
+
+// ===== DYNAMIC PRICING =====
+fetch('./prices.json')
+  .then(r => r.ok ? r.json() : null)
+  .then(prices => {
+    if (!prices) return;
+    document.querySelectorAll('[data-pb-name]').forEach(el => {
+      const name = el.dataset.pbName;
+      if (prices[name] !== undefined) {
+        const priceSpan = el.querySelector('.pb-price');
+        if (priceSpan) priceSpan.textContent = prices[name];
+      }
+    });
+  })
+  .catch(() => {}); // fail silently if prices.json missing
