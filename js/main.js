@@ -176,9 +176,16 @@ fetch('./prices.json')
     if (!prices) return;
     document.querySelectorAll('[data-pb-name]').forEach(el => {
       const name = el.dataset.pbName;
-      if (prices[name] !== undefined) {
-        const priceSpan = el.querySelector('.pb-price');
-        if (priceSpan) priceSpan.textContent = prices[name];
+      if (prices[name] === undefined) return;
+      const val = prices[name];
+      // Static .pb-price span
+      const pbSpan = el.querySelector('.pb-price');
+      if (pbSpan) pbSpan.textContent = val;
+      // Animated counter .count span — update data-target and current value
+      const countSpan = el.querySelector('.count');
+      if (countSpan) {
+        el.dataset.target = val;
+        countSpan.textContent = Math.round(val);
       }
     });
   })
