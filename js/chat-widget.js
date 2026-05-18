@@ -1,5 +1,5 @@
 (function () {
-  const ESTIMATOR_URL = "http://34.46.22.83:5003";
+  const ESTIMATOR_URL = "https://pauly-estimator-1075378753554.us-central1.run.app";
   const SITE_SOURCE   = "website-mi";
 
   let state = { stage: "greeting", collected: {}, open: false };
