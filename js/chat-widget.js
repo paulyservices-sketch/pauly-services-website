@@ -79,6 +79,22 @@
       #ps-chat-window { width: calc(100vw - 24px); right: 12px; bottom: 80px; }
       #ps-chat-btn { right: 12px; bottom: 16px; }
     }
+    .ps-slots-wrap { padding: 0 16px 12px; display: flex; flex-direction: column; gap: 10px; }
+    .ps-slot-day { font-size: 12px; font-weight: 700; color: #9ca3af; text-transform: uppercase; margin-bottom: 4px; }
+    .ps-slot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .ps-slot-btn {
+      background: #1e1e36; border: 1px solid #2d2d4e; border-radius: 10px;
+      color: #f1f1f1; padding: 8px 6px; font-size: 12px; font-weight: 600;
+      cursor: pointer; text-align: center; transition: background 0.15s, border-color 0.15s;
+    }
+    .ps-slot-btn:hover { background: #2d2d50; border-color: #7c3aed; }
+    .ps-slot-btn.selected { background: #7c3aed; border-color: #7c3aed; color: #fff; }
+    .ps-weekend-note {
+      font-size: 11px; color: #f97316; background: #1c1008;
+      border: 1px solid #f9731633; border-radius: 8px;
+      padding: 6px 10px; margin-bottom: 4px;
+    }
+    .ps-slots-full { font-size: 13px; color: #f87171; padding: 8px 0; }
   `;
   document.head.appendChild(style);
 
@@ -133,6 +149,64 @@
     if (el) el.remove();
   }
 
+  function renderSlots(days) {
+    var existing = win.querySelector("#ps-slots-wrap");
+    if (existing) existing.remove();
+
+    if (!days || days.length === 0) {
+      var full = document.createElement("div");
+      full.id = "ps-slots-wrap";
+      full.className = "ps-slots-wrap";
+      full.innerHTML = '<div class="ps-slots-full">All slots are currently full. Please call <strong>(810) 479-5806</strong> to book.</div>';
+      msgContainer.appendChild(full);
+      msgContainer.scrollTop = msgContainer.scrollHeight;
+      return;
+    }
+
+    input.style.display   = "none";
+    sendBtn.style.display = "none";
+
+    var wrap = document.createElement("div");
+    wrap.id = "ps-slots-wrap";
+    wrap.className = "ps-slots-wrap";
+
+    days.forEach(function (day) {
+      var dayEl = document.createElement("div");
+
+      var header = '';
+      if (day.weekend) {
+        header += '<div class="ps-weekend-note">⚠️ Weekend rate: $197 trip charge. The office will confirm.</div>';
+      }
+      header += '<div class="ps-slot-day">' + day.label + '</div>';
+      header += '<div class="ps-slot-grid">';
+      day.slots.forEach(function (slot) {
+        var val = day.label + " · " + slot.label + "|" + slot.id + "|" + day.date;
+        header += '<button class="ps-slot-btn" data-val="' + val + '">' + slot.label + '</button>';
+      });
+      header += '</div>';
+      dayEl.innerHTML = header;
+
+      dayEl.querySelectorAll(".ps-slot-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          wrap.querySelectorAll(".ps-slot-btn").forEach(function (b) { b.classList.remove("selected"); });
+          btn.classList.add("selected");
+          var val = btn.getAttribute("data-val");
+          setTimeout(function () {
+            wrap.remove();
+            input.style.display   = "";
+            sendBtn.style.display = "";
+            handleSend(val);
+          }, 300);
+        });
+      });
+
+      wrap.appendChild(dayEl);
+    });
+
+    msgContainer.appendChild(wrap);
+    msgContainer.scrollTop = msgContainer.scrollHeight;
+  }
+
   async function sendToApi(userMessage) {
     const payload = {
       stage:        state.stage,
@@ -160,7 +234,9 @@
       state.stage     = data.stage;
       state.collected = data.collected || {};
       addMsg("agent", data.agent || "Andy", data.reply);
-      if (data.stage === "complete" || data.stage === "done") {
+      if (data.slots) {
+        renderSlots(data.slots);
+      } else if (data.stage === "complete" || data.stage === "done") {
         input.style.display   = "none";
         sendBtn.style.display = "none";
       }
