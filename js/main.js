@@ -124,8 +124,28 @@ form.addEventListener('submit', async (e) => {
     if (!data.success) throw new Error(data.message || 'submit failed');
   } catch (err) {
     console.error('Web3Forms error:', err);
-    // Save locally as backup so no booking is ever lost
     localStorage.setItem('pauly_booking_' + Date.now(), JSON.stringify(payload));
+  }
+
+  // Also send to the Pauly Services backend to create a ticket + website lead
+  try {
+    await fetch('http://34.46.22.83:5003/api/website-booking', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({
+        name:       payload.name,
+        phone:      payload.phone,
+        address:    payload.address,
+        email:      payload.email,
+        service:    payload.service,
+        urgency:    payload.urgency,
+        worry_free: payload.worry_free,
+        notes:      payload.notes,
+        source:     'website_mi',
+      }),
+    });
+  } catch (err) {
+    console.error('Backend booking error:', err);
   }
 
   form.style.display = 'none';
