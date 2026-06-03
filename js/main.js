@@ -127,9 +127,20 @@ form.addEventListener('submit', async (e) => {
     localStorage.setItem('pauly_booking_' + Date.now(), JSON.stringify(payload));
   }
 
-  // Also send to the Pauly Services backend to create a ticket + website lead
+  // Telegram notification — awaited so errors are visible in console
   try {
-    await fetch('http://34.46.22.83:5003/api/website-booking', {
+    const svc   = (payload.service || '').split('—')[0].trim();
+    const tgMsg = `📋 NEW BOOKING — Pauly Services MI\n\n👤 ${payload.name}\n📞 ${payload.phone}\n📍 ${payload.address}\n🔧 ${svc}\n⚡ ${payload.urgency}\n📝 ${payload.notes}\n🕒 ${payload.submitted_at}`;
+    await fetch(`https://api.telegram.org/bot8540182322:AAH23_H29bfWi6VpSgSJcxRqHyrBj0dXoWw/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: 8733290434, text: tgMsg }),
+    });
+  } catch (err) { console.error('Telegram ping error:', err); }
+
+  // Send to cloud backend (HTTPS required — only reaches server when HTTPS is enabled)
+  try {
+    await fetch('https://34.46.22.83:5003/api/website-booking', {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify({
@@ -145,7 +156,7 @@ form.addEventListener('submit', async (e) => {
       }),
     });
   } catch (err) {
-    console.error('Backend booking error:', err);
+    console.error('Backend booking error (non-critical):', err);
   }
 
   form.style.display = 'none';
