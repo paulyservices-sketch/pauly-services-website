@@ -138,21 +138,22 @@ form.addEventListener('submit', async (e) => {
     });
   } catch (err) { console.error('Telegram ping error:', err); }
 
-  // Send to cloud backend (HTTPS required — only reaches server when HTTPS is enabled)
+  // Send to Pauly Services Dashboard via Cloudflare tunnel → saves ticket locally + shows in dashboard
   try {
-    await fetch('https://34.46.22.83:5003/api/website-booking', {
+    await fetch('https://vocabulary-characteristics-laid-teddy.trycloudflare.com/api/book', {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify({
-        name:       payload.name,
-        phone:      payload.phone,
-        address:    payload.address,
-        email:      payload.email,
-        service:    payload.service,
-        urgency:    payload.urgency,
-        worry_free: payload.worry_free,
-        notes:      payload.notes,
-        source:     'website_mi',
+        name:           payload.name,
+        phone:          payload.phone,
+        address:        payload.address,
+        email:          payload.email,
+        service:        payload.service,
+        description:    payload.notes || payload.service,
+        preferred_time: payload.urgency,
+        urgent:         payload.urgency === 'urgent' ? 'Yes' : 'No',
+        worry_free:     payload.worry_free,
+        source:         'website_mi',
       }),
     });
   } catch (err) {
