@@ -149,7 +149,7 @@ form.addEventListener('submit', async (e) => {
 
   // Send to Pauly Services Dashboard via Cloudflare tunnel → saves ticket locally + shows in dashboard
   try {
-    await fetch('https://vocabulary-characteristics-laid-teddy.trycloudflare.com/api/book', {
+    await fetch('https://decrease-humanitarian-ski-infinite.trycloudflare.com/api/book', {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify({
