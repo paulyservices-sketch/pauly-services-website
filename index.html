@@ -87,7 +87,7 @@
 <div class="trust-bar">
   <div class="container trust-inner">
     <div class="trust-item">✅ Licensed &amp; Insured</div>
-    <div class="trust-item">⏱ 24/7 Emergency Available</div>
+    <div class="trust-item">⏱ After Hours — Coming Soon</div>
     <div class="trust-item">💰 Flat-Rate Pricing</div>
     <div class="trust-item">🚫 No Hidden Fees</div>
     <div class="trust-item">📍 St. Clair &amp; Macomb County</div>
@@ -357,10 +357,10 @@
 <section class="section" id="hours">
   <div class="container">
     <div class="section-label">Hours &amp; Trip Charges</div>
-    <h2 class="section-title">We're Available 24/7 — Pricing Is Honest Up Front</h2>
-    <p class="section-sub">Trip charges are collected before we dispatch — no surprises when we arrive. Emergency and after-hours rates cover our real cost of showing up outside normal hours. Service pricing is the same regardless of when you call.</p>
+    <h2 class="section-title">Regular Hours — Honest Pricing Up Front</h2>
+    <p class="section-sub">Trip charge is collected before we dispatch — no surprises when we arrive. Service pricing is flat-rate and quoted before any work begins.</p>
 
-    <div class="hours-grid">
+    <div class="hours-grid" style="justify-content:center">
 
       <div class="hours-card">
         <div class="hours-badge regular-badge">Regular Hours</div>
@@ -373,28 +373,11 @@
         <p class="hours-desc">Standard rate. Paid upfront before we head your way.</p>
       </div>
 
-      <div class="hours-card afterhours-card">
-        <div class="hours-badge afterhours-badge">After Hours</div>
-        <div class="hours-time">Mon – Fri 5–9 pm</div>
-        <div class="hours-time-detail">Sat – Sun 8 am – 5 pm</div>
-        <div class="trip-charge-row">
-          <span class="trip-label">Trip Charge</span>
-          <span class="trip-price afterhours-price" data-pb-name="Trip Charge (After Hours  Saterday)">$197</span>
-        </div>
-        <p class="hours-desc">Evenings and weekends. Same great work, slightly higher dispatch cost.</p>
-        <p style="margin-top:10px;font-size:.78rem;color:var(--green);font-style:italic">💳 Cards, Cash App, Cash &amp; Check accepted</p>
-      </div>
-
-      <div class="hours-card emergency-card">
-        <div class="hours-badge emergency-badge">Emergency / Holiday</div>
-        <div class="hours-time">9 pm – 8 am · Any Day</div>
-        <div class="hours-time-detail">All federal holidays</div>
-        <div class="trip-charge-row">
-          <span class="trip-label">Trip Charge</span>
-          <span class="trip-price emergency-price" data-pb-name="Trip Charge (After Hours Any Time 24/7)">$397</span>
-        </div>
-        <p class="hours-desc">Middle of the night, holidays — we still come out. This covers us doing so.</p>
-        <p style="margin-top:10px;font-size:.78rem;color:var(--green);font-style:italic">💳 Cards, Cash App, Cash &amp; Check accepted</p>
+      <div class="hours-card" style="opacity:.6;pointer-events:none">
+        <div class="hours-badge" style="background:#555">After Hours / Emergency</div>
+        <div class="hours-time" style="color:var(--muted)">Evenings · Weekends · Holidays</div>
+        <div class="hours-time-detail" style="color:var(--muted)">— Coming Soon —</div>
+        <p class="hours-desc" style="color:var(--muted);margin-top:12px">Extended hours are on the way. Stay tuned!</p>
       </div>
 
     </div>
@@ -477,7 +460,7 @@
             <label for="urgency">How Soon? *</label>
             <select id="urgency" name="urgency" required>
               <option value="">— Select —</option>
-              <option value="Emergency — ASAP">🚨 Emergency / After Hours — ASAP</option>
+              <option value="Emergency — ASAP" disabled>🚨 Emergency / After Hours — Coming Soon</option>
               <option value="Same Day">⚡ Same Day (regular hours)</option>
               <option value="This Week">📅 This Week</option>
               <option value="Schedule for Later">🗓 Schedule for Later</option>
@@ -544,13 +527,12 @@
           <h4>⚡ Response Time</h4>
           <p><strong>Online booking:</strong> We call to schedule ASAP<br />
           <strong>At latest:</strong> Next business day<br />
-          <strong>Emergency:</strong> Call us directly — same-day</p>
+          <strong>After hours:</strong> Coming soon</p>
         </div>
         <div class="sidebar-card trip-sidebar-card">
-          <h4>🚗 Trip Charges (upfront)</h4>
+          <h4>🚗 Trip Charge (upfront)</h4>
           <div class="trip-sidebar-row"><span>Regular hours (M–F 8–5)</span><span class="trip-sidebar-price regular-price" data-pb-name="Service Call / Diagnostic">$77</span></div>
-          <div class="trip-sidebar-row"><span>After hours / weekends</span><span class="trip-sidebar-price afterhours-price" data-pb-name="Trip Charge (After Hours  Saterday)">$197</span></div>
-          <div class="trip-sidebar-row"><span>Emergency / holiday</span><span class="trip-sidebar-price emergency-price" data-pb-name="Trip Charge (After Hours Any Time 24/7)">$397</span></div>
+          <div class="trip-sidebar-row" style="opacity:.5"><span>After hours / weekends</span><span style="font-size:.8rem;color:var(--muted)">Coming Soon</span></div>
           <p style="font-size:0.75rem;color:var(--muted);margin-top:8px">Collected before dispatch. Service pricing is separate and quoted upfront.</p>
         </div>
         <div class="sidebar-card guarantee">
@@ -629,11 +611,11 @@
     <div class="faq-list">
       <div class="faq-item">
         <button class="faq-q">What are your hours?</button>
-        <div class="faq-a">Regular hours are Monday–Friday, 8 am to 5 pm (last call at 4 pm). We're also available evenings, weekends, and holidays — those slots carry a higher trip charge. True emergencies (middle of the night, etc.) — just call us directly at (810) 479-5806.</div>
+        <div class="faq-a">Regular hours are Monday–Friday, 8 am to 5 pm (last call at 4 pm). After-hours and weekend availability is coming soon — stay tuned! In the meantime, call us at (810) 479-5806 and we'll do our best to help.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q">What is a trip charge and when is it collected?</button>
-        <div class="faq-a">A trip charge covers the cost of dispatching to your location and is collected <strong>upfront before we head your way</strong>. Regular hours (M–F 8–5): <span data-pb-name="Service Call / Diagnostic">$77</span>. After hours / weekends: <span data-pb-name="Trip Charge (After Hours  Saterday)">$197</span>. Emergency, late night, or holiday: <span data-pb-name="Trip Charge (After Hours Any Time 24/7)">$397</span>. Trip charges are separate from service pricing — your flat-rate service cost is quoted before any work begins.</div>
+        <div class="faq-a">A trip charge covers the cost of dispatching to your location and is collected <strong>upfront before we head your way</strong>. Regular hours (M–F 8–5): <span data-pb-name="Service Call / Diagnostic">$77</span>. After-hours and weekend rates are coming soon. Trip charges are separate from service pricing — your flat-rate service cost is quoted before any work begins.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q">Do you charge by the hour or flat rate?</button>
@@ -641,7 +623,7 @@
       </div>
       <div class="faq-item">
         <button class="faq-q">How fast can you get to my home?</button>
-        <div class="faq-a">We offer same-day service in most cases. Emergency calls — call us directly at (810) 479-5806. For online bookings, we'll call you to schedule ASAP — no later than next business day.</div>
+        <div class="faq-a">We offer same-day service in most cases during regular hours (M–F 8–5). For online bookings, we'll call you to schedule ASAP — no later than next business day.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q">What areas do you serve?</button>

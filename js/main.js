@@ -184,15 +184,15 @@ if (urgencySelect && tripHint) {
     const val = urgencySelect.value;
     tripHint.className = 'trip-hint';
     if (val === 'Emergency — ASAP') {
-      tripHint.textContent = '🚨 Emergency / after-hours trip charge: $397 — collected upfront before dispatch.';
+      tripHint.textContent = '🚨 Emergency / after-hours service coming soon — please call us directly at (810) 479-5806.';
       tripHint.classList.add('hint-emergency');
       tripHint.style.display = 'block';
     } else if (val === 'Same Day') {
-      tripHint.textContent = '⚡ Regular hours trip charge: \$77 — collected upfront before dispatch. If after 5 pm or weekend, after-hours rate ($197) applies.';
+      tripHint.textContent = '⚡ Regular hours trip charge: $77 — collected upfront before dispatch.';
       tripHint.classList.add('hint-regular');
       tripHint.style.display = 'block';
     } else if (val === 'This Week' || val === 'Schedule for Later') {
-      tripHint.textContent = '📅 Regular hours trip charge: \$77 — collected upfront before dispatch.';
+      tripHint.textContent = '📅 Regular hours trip charge: $77 — collected upfront before dispatch.';
       tripHint.classList.add('hint-regular');
       tripHint.style.display = 'block';
     } else {
