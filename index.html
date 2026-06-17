@@ -485,6 +485,21 @@
             <div id="trip-charge-hint" class="trip-hint" style="display:none"></div>
           </div>
         </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="preferred_date">Preferred Date (optional)</label>
+            <input type="date" id="preferred_date" name="preferred_date" />
+          </div>
+          <div class="form-group">
+            <label for="preferred_time">Preferred Time (optional)</label>
+            <select id="preferred_time" name="preferred_time">
+              <option value="">— No Preference —</option>
+              <option value="Morning (9am – 1pm)">Morning (9am – 1pm)</option>
+              <option value="Afternoon (1pm – 5pm)">Afternoon (1pm – 5pm)</option>
+              <option value="Either works">Either works</option>
+            </select>
+          </div>
+        </div>
         <div class="form-group full">
           <label for="notes">Describe the Problem (optional)</label>
           <textarea id="notes" name="notes" rows="3" placeholder="e.g. Kitchen sink draining slowly, gurgling sounds after disposal runs..."></textarea>

@@ -84,11 +84,13 @@ form.addEventListener('submit', async (e) => {
   const worryFreeEl = form.querySelector('[name="worry_free"]');
   const worryFree = worryFreeEl && worryFreeEl.checked ? 'Yes (+$47)' : 'No';
 
-  const name    = form.name.value.trim();
-  const phone   = form.phone.value.trim();
-  const address = form.address.value.trim();
-  const service = form.service.value;
-  const urgency = form.urgency.value;
+  const name           = form.name.value.trim();
+  const phone          = form.phone.value.trim();
+  const address        = form.address.value.trim();
+  const service        = form.service.value;
+  const urgency        = form.urgency.value;
+  const preferred_date = (form.preferred_date && form.preferred_date.value) || '';
+  const preferred_time = (form.preferred_time && form.preferred_time.value) || '';
 
   if (!name || !phone || !address || !service || !urgency) {
     alert('Please fill out all required fields.');
@@ -99,19 +101,26 @@ form.addEventListener('submit', async (e) => {
   btnLoading.style.display = 'inline';
   submitBtn.disabled = true;
 
+  const requested_time = preferred_date && preferred_time
+    ? `${preferred_date} — ${preferred_time}`
+    : preferred_date || preferred_time || urgency;
+
   const payload = {
-    access_key:  document.getElementById('w3f-key').value,
-    subject:     `New Booking — ${name} — ${service.split('—')[0].trim()}`,
-    from_name:   'Pauly Services Website',
+    access_key:     document.getElementById('w3f-key').value,
+    subject:        `New Booking — ${name} — ${service.split('—')[0].trim()}`,
+    from_name:      'Pauly Services Website',
     name,
     phone,
-    email:       form.email.value.trim() || '(not provided)',
+    email:          form.email.value.trim() || '(not provided)',
     address,
     service,
     urgency,
-    worry_free:  worryFree,
-    notes:       form.notes.value.trim() || '(none)',
-    submitted_at: new Date().toLocaleString('en-US', { timeZone: 'America/Detroit' }),
+    preferred_date,
+    preferred_time,
+    requested_time,
+    worry_free:     worryFree,
+    notes:          form.notes.value.trim() || '(none)',
+    submitted_at:   new Date().toLocaleString('en-US', { timeZone: 'America/Detroit' }),
   };
 
   try {
@@ -130,7 +139,7 @@ form.addEventListener('submit', async (e) => {
   // Telegram notification — awaited so errors are visible in console
   try {
     const svc   = (payload.service || '').split('—')[0].trim();
-    const tgMsg = `📋 NEW BOOKING — Pauly Services MI\n\n👤 ${payload.name}\n📞 ${payload.phone}\n📍 ${payload.address}\n🔧 ${svc}\n⚡ ${payload.urgency}\n📝 ${payload.notes}\n🕒 ${payload.submitted_at}`;
+    const tgMsg = `📋 NEW BOOKING — Pauly Services MI\n\n👤 ${payload.name}\n📞 ${payload.phone}\n📍 ${payload.address}\n🔧 ${svc}\n⚡ ${payload.urgency}\n📅 Requested: ${payload.requested_time}\n📝 ${payload.notes}\n🕒 ${payload.submitted_at}`;
     await fetch(`https://api.telegram.org/bot8540182322:AAH23_H29bfWi6VpSgSJcxRqHyrBj0dXoWw/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -150,7 +159,9 @@ form.addEventListener('submit', async (e) => {
         email:          payload.email,
         service:        payload.service,
         description:    payload.notes || payload.service,
-        preferred_time: payload.urgency,
+        preferred_date:  payload.preferred_date,
+        preferred_time:  payload.preferred_time,
+        requested_time:  payload.requested_time,
         urgent:         payload.urgency === 'urgent' ? 'Yes' : 'No',
         worry_free:     payload.worry_free,
         source:         'website_mi',
