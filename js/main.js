@@ -136,16 +136,6 @@ form.addEventListener('submit', async (e) => {
     localStorage.setItem('pauly_booking_' + Date.now(), JSON.stringify(payload));
   }
 
-  // Telegram notification — awaited so errors are visible in console
-  try {
-    const svc   = (payload.service || '').split('—')[0].trim();
-    const tgMsg = `📋 NEW BOOKING — Pauly Services MI\n\n👤 ${payload.name}\n📞 ${payload.phone}\n📍 ${payload.address}\n🔧 ${svc}\n⚡ ${payload.urgency}\n📅 Requested: ${payload.requested_time}\n📝 ${payload.notes}\n🕒 ${payload.submitted_at}`;
-    await fetch(`https://api.telegram.org/bot8540182322:AAH23_H29bfWi6VpSgSJcxRqHyrBj0dXoWw/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: 8733290434, text: tgMsg }),
-    });
-  } catch (err) { console.error('Telegram ping error:', err); }
 
   // Send to Pauly Services Dashboard via Cloudflare tunnel → saves ticket locally + shows in dashboard
   try {
@@ -212,24 +202,3 @@ window.addEventListener('scroll', () => {
   });
 }, { passive: true });
 
-// ===== DYNAMIC PRICING =====
-fetch('./prices.json')
-  .then(r => r.ok ? r.json() : null)
-  .then(prices => {
-    if (!prices) return;
-    document.querySelectorAll('[data-pb-name]').forEach(el => {
-      const name = el.dataset.pbName;
-      if (prices[name] === undefined) return;
-      const val = prices[name];
-      // Static .pb-price span
-      const pbSpan = el.querySelector('.pb-price');
-      if (pbSpan) pbSpan.textContent = val;
-      // Animated counter .count span — update data-target and current value
-      const countSpan = el.querySelector('.count');
-      if (countSpan) {
-        el.dataset.target = val;
-        countSpan.textContent = Math.round(val);
-      }
-    });
-  })
-  .catch(() => {}); // fail silently if prices.json missing
